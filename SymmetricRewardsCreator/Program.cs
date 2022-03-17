@@ -34,6 +34,10 @@ namespace Symmetric.CorrectionNS
 
         private static IConfigurationRoot? Config { get; set; }
 
+        /// <summary>
+        /// The applications main entry point
+        /// </summary>
+        /// <param name="args">Arguments provided to the application</param>
         public static void Main(string[] args)
         {
             Config = new ConfigurationBuilder()
@@ -52,6 +56,11 @@ namespace Symmetric.CorrectionNS
             }
         }
 
+        /// <summary>
+        /// The main function that runs every hour to calculate rewards
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="e"></param>
         private static async void OnTimedEvent(object source, ElapsedEventArgs e)
         {
             checked // for overflow
@@ -182,6 +191,10 @@ namespace Symmetric.CorrectionNS
             }
         }
 
+        /// <summary>
+        /// Method to record rewards to a SQL Azure (or other) database
+        /// </summary>
+        /// <param name="users">List of wallets due a reward payment</param>
         private static void RecordRewards(List<Wallet> users)
         {
             SqlConnectionStringBuilder builder = new();
@@ -221,6 +234,12 @@ namespace Symmetric.CorrectionNS
             }
         }
 
+        /// <summary>
+        /// Method to calculate adjusted pool liquidity based on feeFactor, ratioFactor and wrapFactor
+        /// </summary>
+        /// <param name="pool">Pool to calculate an adjusted liquidity amount for</param>
+        /// <param name="network">The network being this reward is for</param>
+        /// <returns>An adjusted liquidity amount for the pool</returns>
         private static decimal CalculateAdjustedLiquidity(PoolsType pool, Network network)
         {
             if (pool.tokens != null)
@@ -265,6 +284,11 @@ namespace Symmetric.CorrectionNS
             }
         }
 
+        /// <summary>
+        /// Calculate the feeFactor which is determined by the fee set for a pool
+        /// </summary>
+        /// <param name="swapFee">The pools configured swap fee</param>
+        /// <returns>The pools fee factor</returns>
         private static double GetFeeFactor(double swapFee)
         {
             checked // for overflow
@@ -276,6 +300,14 @@ namespace Symmetric.CorrectionNS
             }
         }
 
+        /// <summary>
+        /// Calculate the ratioFactor which is determined by the pools weighting
+        /// </summary>
+        /// <param name="pool">The pool the factor is to be applied to</param>
+        /// <param name="weights">The weights defined for the pool</param>
+        /// <param name="chainId">The chain the pool is on</param>
+        /// <param name="balMultiplier">The balancer bonus multiplier to be applied</param>
+        /// <returns>The pools ratio factor</returns>
         private static double ComputeRatioFactor(PoolsType pool, List<double> weights, int chainId, double balMultiplier)
         {
             checked // for overflow
@@ -328,6 +360,16 @@ namespace Symmetric.CorrectionNS
             }
         }
 
+        /// <summary>
+        /// Calculate the pools staking boast determined by tables of token relationships
+        /// </summary>
+        /// <param name="chainId">The chain this pool is on</param>
+        /// <param name="balMultiplier">A multiplier applied to pools containing SYMM token</param>
+        /// <param name="token1">The first token</param>
+        /// <param name="weight1">The first tokens weight</param>
+        /// <param name="token2">The second token</param>
+        /// <param name="weight2">The second tokens weight</param>
+        /// <returns>The staking boost to be applied</returns>
         private static double GetStakingBoostOfPair(
           int chainId,
           double balMultiplier,
@@ -371,6 +413,13 @@ namespace Symmetric.CorrectionNS
             }
         }
 
+        /// <summary>
+        /// Compute the wrap factor to apply to the current pool
+        /// </summary>
+        /// <param name="pool">The pool this factor is to be applied to</param>
+        /// <param name="weights">The weights set for this pool</param>
+        /// <param name="chainId">The chain this pool is on</param>
+        /// <returns>The computed wrap factor</returns>
         private static double ComputeWrapFactor(PoolsType pool, List<double> weights, int chainId)
         {
             checked // for overflow
@@ -406,6 +455,13 @@ namespace Symmetric.CorrectionNS
             }
         }
 
+        /// <summary>
+        /// Get the wrap factor for the supplied token pair
+        /// </summary>
+        /// <param name="tokenA">The first token</param>
+        /// <param name="tokenB">The second token</param>
+        /// <param name="chainId">The chain this pool is on</param>
+        /// <returns>The wrap factor to be applied to the pool</returns>
         private static double GetWrapFactorOfPair(TokenType tokenA, TokenType tokenB, int chainId)
         {
             checked // for overflow

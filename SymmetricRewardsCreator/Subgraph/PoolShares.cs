@@ -18,6 +18,12 @@ namespace SymmetricRewardsCreator.Subgraph
             public decimal balance { get; set; }
         }
 
+        /// <summary>
+        /// Get a collection of all the pool shares for a specific pool
+        /// </summary>
+        /// <param name="targetNetwork">The target network for the current pool</param>
+        /// <param name="poolId">The pool address</param>
+        /// <returns>A list of shares from the current pool</returns>
         public static async Task<List<ShareType>> GetPoolShares(Network targetNetwork, string poolId)
         {
             // Load subgraph data

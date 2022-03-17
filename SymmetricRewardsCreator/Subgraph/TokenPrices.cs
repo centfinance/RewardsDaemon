@@ -21,6 +21,11 @@ namespace SymmetricRewardsCreator.Subgraph
 
     public class TokenPrices
     {
+        /// <summary>
+        /// Get a collection of all the token prices for the current target network
+        /// </summary>
+        /// <param name="targetNetwork">The target network to retrieve pricing from</param>
+        /// <returns>A collection of token prices</returns>
         public static async Task<SymmetricTokenPrices> GetAllTokenPrices(Network targetNetwork)
         {
             // Load subgraph data

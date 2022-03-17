@@ -81,6 +81,11 @@ namespace SymmetricRewardsCreator.Subgraph
 
     public class Pools
     {
+        /// <summary>
+        /// Get all the pools from Subgraph
+        /// </summary>
+        /// <param name="targetNetwork">The network we are retrieving pools for</param>
+        /// <returns>A collection of all the pools on the target network</returns>
         public static async Task<SymmetricPools> GetAllPools(Network targetNetwork)
         {
             // Load subgraph data

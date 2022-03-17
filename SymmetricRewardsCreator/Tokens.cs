@@ -25,7 +25,10 @@ namespace SymmetricRewardsCreator
 
         public List<TokenEquivalentSet> EquivalentSets { get; set; }
 
-        // TODO: Move this out to a config file
+        /// <summary>
+        /// Tables of tokens and their relationships used for working out factors
+        /// TODO: Move this out to a config file
+        /// </summary>
         public Tokens()
         {
             BAL_TOKEN = new();
