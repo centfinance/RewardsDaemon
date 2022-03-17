@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32112.339
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SymmetricRewardsCreator", "SymmetricRewardsCreator\SymmetricRewardsCreator.csproj", "{2D40CA3A-6F4B-4941-8D6D-9243772C2849}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2D40CA3A-6F4B-4941-8D6D-9243772C2849}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D40CA3A-6F4B-4941-8D6D-9243772C2849}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D40CA3A-6F4B-4941-8D6D-9243772C2849}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D40CA3A-6F4B-4941-8D6D-9243772C2849}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {28508150-6345-49A4-A95D-83F51EA5E7CF}
+	EndGlobalSection
+EndGlobal
