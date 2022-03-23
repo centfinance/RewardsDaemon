@@ -1,7 +1,6 @@
 ﻿using GraphQL;
 using GraphQL.Client.Http;
 using GraphQL.Client.Serializer.Newtonsoft;
-using static SymmetricRewardsCreator.Subgraph.PoolShares;
 
 namespace SymmetricRewardsCreator.Subgraph;
 

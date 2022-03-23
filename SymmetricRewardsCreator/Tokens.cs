@@ -35,7 +35,7 @@ public class Tokens
         BAL_TOKEN.Add(1, "0x57dB3FfCa78dBbE0eFa0EC745D55f62aa0Cbd345");
         BAL_TOKEN.Add(42, "0xfB66054D9C7b357b3134Dc47eD54EddAcc012f44");
         BAL_TOKEN.Add(100, "0xC45b3C1c24d5F54E7a2cF288ac668c74Dd507a84");
-        BAL_TOKEN.Add(42220, "0x7c64ad5f9804458b8c9f93f7300c15d55956ac2a");
+        BAL_TOKEN.Add(42220, "0x8427bD503dd3169cCC9aFF7326c15258Bc305478");
 
         UncappedTokens = new List<TokenSet>();
 

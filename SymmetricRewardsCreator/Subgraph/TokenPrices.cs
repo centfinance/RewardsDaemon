@@ -16,6 +16,7 @@ public class TokenPricesType
     public string? symbol { get; set; }
 
     public double price { get; set; }
+
 }
 
 public class TokenPrices
@@ -44,13 +45,13 @@ public class TokenPrices
         var tokenPriceRequest = new GraphQLRequest
         {
             Query = @"
-            {
-                    tokenPrices {
-                    id
-                    symbol
-                    price
-                }
-            }"
+                {
+                     tokenPrices {
+                        id
+                        symbol
+                        price
+                    }
+                }"
         };
 
         var graphQLResponse = await graphQLClient.SendQueryAsync<SymmetricTokenPrices>(tokenPriceRequest);

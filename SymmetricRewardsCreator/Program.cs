@@ -29,7 +29,7 @@ public class Wallet
 class Program
 {
     // TODO: Move this out to a config file
-    private static readonly decimal SYMM_Daily_Rewards = (decimal)15.20833333333333;
+    private static readonly decimal SYMM_Daily_Rewards = (decimal)15.20833333333333;  // 365 SYMM tokens per day
 
     private static Tokens? balTokenSet { get; set; }
 
@@ -41,6 +41,7 @@ class Program
     /// <param name="args">Arguments provided to the application</param>
     public static void Main(string[] args)
     {
+        Console.WriteLine("Daemon starting");
         Config = new ConfigurationBuilder()
         .AddUserSecrets<Program>()
         .Build();
@@ -64,14 +65,14 @@ class Program
     /// <param name="e"></param>
     private static async void OnTimedEvent(object source, ElapsedEventArgs e)
     {
-        Trace.WriteLine("Timed event started");
+        Console.WriteLine("New timed event at " + DateTime.Now);
 
         checked // for overflow
         {
             // Get all pools from Subgraph
             var rewardPoolsCelo = await Pools.GetAllPools(Network.Celo);
             var rewardPoolsGnosis = await Pools.GetAllPools(Network.Gnosis);
-
+            Console.WriteLine("Collected pool date");
             if (rewardPoolsCelo != null &&
                 rewardPoolsGnosis != null)
             {
@@ -127,7 +128,7 @@ class Program
                     }
                 }
 
-                Trace.WriteLine("Calculated adjusted liquidity for all networks");
+                Console.WriteLine("Collected adjusted pool liquidity");
 
                 if (rewardPoolsCelo.Pools != null)
                 {
@@ -193,7 +194,7 @@ class Program
                     }
                 }
 
-                Trace.WriteLine("Calculated reward payments for all wallets");
+                Console.WriteLine("Rewards calculated, now writing rewards to database");
 
                 RecordRewards(users);
             }
@@ -333,8 +334,8 @@ class Program
                 for (var k = j + 1; k < N; k++)
                 {
                     var pairWeight = weights[j] * weights[k];
-                    var normalizedWeight1 = weights[j] / weights[j] + weights[k];
-                    var normalizedWeight2 = weights[k] / weights[j] + weights[k];
+                    var normalizedWeight1 = weights[j] / (weights[j] + weights[k]);
+                    var normalizedWeight2 = weights[k] / (weights[j] + weights[k]);
 
                     if (pool.tokens != null &&
                         pool.tokens[j].address != null &&
@@ -349,6 +350,7 @@ class Program
                           pool.tokens[k].address.ToLower(),
                           weights[k]
                         );
+
 #pragma warning restore CS8602 // Dereference of a possibly null reference.
 
                         // stretches factor for equal weighted pairs to 1
@@ -392,10 +394,11 @@ class Program
         {
             balTokenSet = new Tokens();
 
-            if (!string.IsNullOrEmpty(token1) && !string.IsNullOrEmpty(token2) &&
-                balTokenSet.BAL_TOKEN[chainId] != null &&
-                token1 == balTokenSet.BAL_TOKEN[chainId]?.ToString()?.ToLower() &&
-                balTokenSet.UncappedTokens.FirstOrDefault(b => b.NetworkId == chainId).Tokens.Contains(token2)
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+            if (
+              balTokenSet.BAL_TOKEN[chainId] != null &&
+              token1 == balTokenSet.BAL_TOKEN[chainId]?.ToString()?.ToLower() &&
+              balTokenSet.UncappedTokens.FirstOrDefault(b => b.NetworkId == chainId).Tokens.Contains(token2)
             )
             {
                 return balMultiplier
@@ -403,11 +406,11 @@ class Program
                   + weight2
                   / (weight1 + weight2);
             }
-            else if (!string.IsNullOrEmpty(token1) && !string.IsNullOrEmpty(token2) &&
-                balTokenSet.BAL_TOKEN[chainId] != null &&
-                token2 == balTokenSet.BAL_TOKEN[chainId]?.ToString()?.ToLower() &&
-                balTokenSet.UncappedTokens.FirstOrDefault(b => b.NetworkId == chainId).Tokens.Contains(token1)
-                )
+            else if (
+            balTokenSet.BAL_TOKEN[chainId] != null &&
+            token2 == balTokenSet.BAL_TOKEN[chainId]?.ToString()?.ToLower() &&
+            balTokenSet.UncappedTokens.FirstOrDefault(b => b.NetworkId == chainId).Tokens.Contains(token1)
+          )
             {
                 return weight1
                   + (balMultiplier * weight2)
@@ -417,6 +420,7 @@ class Program
             {
                 return 1;
             }
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
         }
     }
 
