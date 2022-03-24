@@ -14,9 +14,12 @@ dotnet --info
 The daemon can be built and run in Windows, Mac and Linux environments. The only requirement is that .NET 6 be installed.
 
 ## Build
+```
 dotnet build
+```
 
 ## Publish a single file executable
+```
 dotnet publish -r win10-x64 -c Release --self-contained=false /p:PublishSingleFile=true
-
+```
 You may substitute different target environments as required.
