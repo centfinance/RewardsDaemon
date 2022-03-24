@@ -37,7 +37,7 @@ Within this file you will need to store the following secrets for your target da
   "RewardsDatabase:UserID": "<username>",
   "RewardsDatabase:DataSource": "<server URL>",
   "RewardsDatabase:Password": "<password>",
-  "RewardsDatabase:InitialCatalog": "<database name?"
+  "RewardsDatabase:InitialCatalog": "<database name>"
 }
 ```
 
